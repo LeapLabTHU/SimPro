@@ -1,24 +1,8 @@
-#
-# reverse 0: consistent, 1: reversed, 3:middle, 4:head-tail  2: random (we don't report this)
+!#/bin/bash
 
 version=SimPro
-#dataset=smallimagenet_1k # 1000 classes
-#dataset=smallimagenet  #127 classes
-#dataset=stl10
-#dataset=cifar100
-#dataset=cifar10
-
 dataset=$1
-
-if [[ "${dataset}" == "cifar10" ]] || [[ "${dataset}" == "cifar100" ]] || [[ "${dataset}" == "stl10" ]]; then
-	idx=$2
-elif [[ "${dataset}" == "smallimagenet" ]] || [[ "${dataset}" == "smallimagenet_1k" ]]; then
-	img_size=$2
-fi
-
-echo "dataset: ${dataset}"
-echo "idx: ${idx}"
-echo "img_size: ${img_size}"
+idx=$2
 
 if [ "$dataset" = "cifar10" ]; then
 
@@ -98,16 +82,18 @@ elif [ "$dataset" = "smallimagenet" ]; then
 	tau=1.0
 	threshold=0.2
 	out=out_imgnet
-	idx=0
 	seed=0
 	bz=32
 	N_GPU=1
 
-	N=(-1)
-	M=(-1)
-	gamma_l=(-1)
-	gamma_ul=(-1)
-	reverse=(0)
+	N=(28000 28000)
+	M=(250000 250000)
+	gamma_l=(286 286)
+	gamma_ul=(286 286)
+	reverse=(0 0)
+	img_sizes=(32 64)
+	img_size=${img_sizes[${idx}]}
+
 	mark=${version}_${dataset}_N${N[${idx}]}_M${M[${idx}]}_gamma_l${gamma_l[${idx}]}_gamma_ul${gamma_ul[${idx}]}_reverse${reverse[${idx}]}_lr${lr}_bz${bz}_total_steps${total_steps}_threshold${threshold}_seed${seed}_ema_u${ema_u}_mu${mu}_img_size${img_size}_tau${tau}
 
 elif [ "$dataset" = "smallimagenet_1k" ]; then
@@ -119,16 +105,19 @@ elif [ "$dataset" = "smallimagenet_1k" ]; then
 	tau=1.0
 	threshold=0.2
 	out=out_imgnet
-	idx=0
 	bz=32
 	N_GPU=1
 	seed=0
 
-	N=(256)
-	M=(1024)
-	gamma_l=(256)
-	gamma_ul=(256)
-	reverse=(0)
+	N=(256 256)
+	M=(1024 1024)
+	gamma_l=(256 256)
+	gamma_ul=(256 256)
+	reverse=(0 0)
+	img_sizes=(32 64)
+
+	img_size=${img_sizes[${idx}]}
+
 	mark=${version}_${dataset}_N${N[${idx}]}_M${M[${idx}]}_gamma_l${gamma_l[${idx}]}_gamma_ul${gamma_ul[${idx}]}_reverse${reverse[${idx}]}_lr${lr}_bz${bz}_total_steps${total_steps}_threshold${threshold}_seed${seed}_ema_u${ema_u}_mu${mu}_img_size${img_size}_tau${tau}
 
 fi
