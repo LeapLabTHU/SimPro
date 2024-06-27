@@ -30,9 +30,28 @@ In the E-step (top), pseudo-labels are generated using the current parameters $\
 In the subsequent M-step (bottom), these pseudo-labels, along with the ground-truth labels, are utilized to compute the Cross-Entropy loss, facilitating the optimization of network parameters $\theta$ via gradient descent.
 Concurrently, the marginal distribution parameter $\pi$ is recalculated using a closed-form solution based on the generated pseudo-labels.
 
+## Performance
+
+<p align="center">
+    <img src="figures/exp1.png" alt="fig1" />
+</p>
+<p align="center">
+    <img src="figures/exp2.png" width= "400" alt="fig1" />
+</p>
+
 ## Get Started
 
 ### Requirements
+
+- python 3.9
+- numpy 1.25.2
+- Pillow 9.2.0
+- Requests 2.28.1
+- scipy 1.9.3
+- torch 1.12.1
+- torchvision 0.13.1
+
+The above environment is recommended, but not necessary. You can also use other versions of the packages.
 
 ### Datasets
 
@@ -78,10 +97,10 @@ bash sh/SimPro.sh cifar100 4         #gamma_l=20 head-tail
 bash sh/SimPro.sh stl10 0            #gamma_l=10
 bash sh/SimPro.sh stl10 1            #gamma_l=20
 
-bash sh/SimPro.sh smallimagenet    0 #ImageNet-127 $32*32$
-bash sh/SimPro.sh smallimagenet    1 #ImageNet-127 $64*64$
-bash sh/SimPro.sh smallimagenet_1k 0 #ImageNet-1k  $32*32$
-bash sh/SimPro.sh smallimagenet_1k 1 #ImageNet-1k  $64*64$
+bash sh/SimPro.sh smallimagenet    0 #ImageNet-127 32*32
+bash sh/SimPro.sh smallimagenet    1 #ImageNet-127 64*64
+bash sh/SimPro.sh smallimagenet_1k 0 #ImageNet-1k  32*32
+bash sh/SimPro.sh smallimagenet_1k 1 #ImageNet-1k  64*64
 
 bash sh/ACR_d.sh ...
 ```
