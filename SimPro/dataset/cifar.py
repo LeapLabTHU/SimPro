@@ -1,5 +1,4 @@
 import logging
-import math
 
 import os
 import sys
@@ -50,16 +49,6 @@ def compute_adjustment_list(label_list, tro, args):
 
 
 def get_cifar10(args, root):
-    transform_labeled = transforms.Compose(
-        [
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(
-                size=32, padding=int(32 * 0.125), padding_mode="reflect"
-            ),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=cifar10_mean, std=cifar10_std),
-        ]
-    )
     transform_val = transforms.Compose(
         [
             transforms.ToTensor(),
@@ -113,17 +102,6 @@ def get_cifar10(args, root):
 
 
 def get_cifar100(args, root):
-    transform_labeled = transforms.Compose(
-        [
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(
-                size=32, padding=int(32 * 0.125), padding_mode="reflect"
-            ),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=cifar100_mean, std=cifar100_std),
-        ]
-    )
-
     transform_val = transforms.Compose(
         [
             transforms.ToTensor(),
@@ -178,18 +156,6 @@ def get_cifar100(args, root):
 
 
 def get_stl10(args, root):
-    transform_labeled = transforms.Compose(
-        [
-            transforms.Resize((32, 32)),
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(
-                size=32, padding=int(32 * 0.125), padding_mode="reflect"
-            ),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=stl10_mean, std=stl10_std),
-        ]
-    )
-
     transform_val = transforms.Compose(
         [
             transforms.Resize((32, 32)),
@@ -197,9 +163,6 @@ def get_stl10(args, root):
             transforms.Normalize(mean=stl10_mean, std=stl10_std),
         ]
     )
-
-    # base_dataset = datasets.STL10(
-    #     root, split="train", download=True)
 
     train_labeled_dataset = datasets.STL10(
         root,
@@ -237,13 +200,6 @@ def get_stl10(args, root):
 
 
 def get_svhn(args, root):
-    # transform_train = transforms.Compose([
-    #     transforms.RandomCrop(32, padding=4),
-    #     transforms.RandomHorizontalFlip(),
-    #     transforms.ToTensor(),
-    #     transforms.Normalize(SVHN_mean, SVHN_std)
-    # ])
-
     transform_labeled = transforms.Compose(
         [
             transforms.RandomHorizontalFlip(),
@@ -320,15 +276,6 @@ def get_smallimagenet(args, root):
         0.26820634,
     )  # np.std(base_dataset.data, axis=(0, 1, 2)) / 255
 
-    transform_train = transforms.Compose(
-        [
-            transforms.RandomCrop(args.img_size, padding=int(args.img_size / 8)),
-            transforms.RandomHorizontalFlip(),
-            transforms.ToTensor(),
-            transforms.Normalize(dataset_mean, dataset_std),
-        ]
-    )
-
     transform_val = transforms.Compose(
         [transforms.ToTensor(), transforms.Normalize(dataset_mean, dataset_std)]
     )
@@ -336,14 +283,11 @@ def get_smallimagenet(args, root):
     # select labeled data and construct labeled dataset
     num_classes = len(set(base_dataset.targets))
     num_data_per_cls = [0 for _ in range(num_classes)]
-    for l in base_dataset.targets:
-        num_data_per_cls[l] += 1
+    for target in base_dataset.targets:
+        num_data_per_cls[target] += 1
 
     num_labeled_data_per_cls = [
         int(np.around(n * labeled_percent)) for n in num_data_per_cls
-    ]
-    num_unlabeled_data_per_cls = [
-        n - l for n, l in zip(num_data_per_cls, num_labeled_data_per_cls)
     ]
 
     train_labeled_idxs = train_split_l(
@@ -438,15 +382,6 @@ def get_smallimagenet_1k(args, root):
         0.26820634,
     )  # np.std(base_dataset.data, axis=(0, 1, 2)) / 255
 
-    transform_train = transforms.Compose(
-        [
-            transforms.RandomCrop(args.img_size, padding=int(args.img_size / 8)),
-            transforms.RandomHorizontalFlip(),
-            transforms.ToTensor(),
-            transforms.Normalize(dataset_mean, dataset_std),
-        ]
-    )
-
     transform_val = transforms.Compose(
         [transforms.ToTensor(), transforms.Normalize(dataset_mean, dataset_std)]
     )
@@ -458,8 +393,6 @@ def get_smallimagenet_1k(args, root):
     args.imb_ratio_unlabel = 256
     labeled_percent = 0.2
     args.num_classes = 1000
-    # args.num_max_l = int(num_max * labeled_percent)
-    # args.num_max_u = num_max - args.num_max_l
 
     samples = make_imb_data(num_max, args.num_classes, args.imb_ratio_label, 1, 0)
     l_samples = []
@@ -713,7 +646,6 @@ class CIFAR10SSL(datasets.CIFAR10):
         self,
         root,
         indexs,
-        exindexs=[],
         train=True,
         transform=None,
         target_transform=None,
@@ -754,7 +686,6 @@ class CIFAR100SSL(datasets.CIFAR100):
         self,
         root,
         indexs,
-        exindexs=[],
         train=True,
         transform=None,
         target_transform=None,
@@ -964,13 +895,4 @@ DATASET_GETTERS = {
 }
 
 if __name__ == "__main__":
-    # u_samples = make_imb_data(400, 10, 0.01, 0, 2)
-    # print(u_samples)
-
-    train_unlabeled_dataset = datasets.STL10(
-        root,
-        split="unlabeled",
-        transform=TransformFixMatchSTL(mean=stl10_mean, std=stl10_std),
-        download=True,
-    )
-    print("train_unlabeled_dataset: ", len(train_unlabeled_dataset))
+    pass

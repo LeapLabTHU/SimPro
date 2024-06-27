@@ -717,9 +717,11 @@ def train(
             )
             tau = args.taumin + (args.taumax - args.taumin) * KL_softmax
 
-            # if math.isnan(tau)==False:
-            #    args.adjustment_l1 = compute_adjustment_by_py(args.py_con, tau, args)
-            args.adjustment_l1 = compute_adjustment_by_py(args.py_con, args.tau1, args)
+            if math.isnan(tau) == False:
+                # args.adjustment_l1 = compute_adjustment_by_py(args.py_con, tau, args)
+                args.adjustment_l1 = compute_adjustment_by_py(
+                    args.py_con, args.tau1, args
+                )
 
         count_KL = torch.zeros(3).to(args.device)
 

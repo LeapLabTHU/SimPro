@@ -21,9 +21,9 @@ if [ "$dataset" = "cifar10" ]; then
 	N=(500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500 500)
 	M=(4000 4000 4000 4000 4000 4000 4000 4000 4000 4000 4000 4000 4000 4000 4000 4000 4000 4000 4000 4000)
 	gamma_l=(150 150 150 150 150 100 100 100 100 100 150 150 150 150 150 150 150 150 150 100)
-	gamma_ul=(150 150 1 150 150 100 100 1 100 100 120 90 60 30 120 90 60 30 150 100)
+	gamma_ul=(150 1 150 150 150 100 1 100 100 100 120 90 60 30 120 90 60 30 150 100)
 
-	reverse=(0 1 0 3 4 0 1 0 3 4 0 0 0 0 1 1 1 1 2 2)
+	reverse=(0 0 1 3 4 0 0 1 3 4 0 0 0 0 1 1 1 1 2 2)
 
 	mark=${version}_${dataset}_N${N[${idx}]}_M${M[${idx}]}_gamma_l${gamma_l[${idx}]}_gamma_ul${gamma_ul[${idx}]}_reverse${reverse[${idx}]}_lr${lr}_bz${bz}_total_steps${total_steps}_threshold${threshold}_seed${seed}_ema_u${ema_u}_mu${mu}_tau${tau}
 
@@ -32,9 +32,9 @@ elif [ "$dataset" = "cifar100" ]; then
 	N=(50 50 50 50 50 50 50 50 50 50 50)
 	M=(400 400 400 400 400 400 400 400 400 400 400)
 	gamma_l=(20 20 20 20 20 10 10 10 10 10 20)
-	gamma_ul=(20 20 1 20 20 10 10 1 10 10 20)
+	gamma_ul=(20 1 20 20 20 10 1 10 10 10 20)
 
-	reverse=(0 1 0 3 4 0 1 0 3 4 2)
+	reverse=(0 0 1 3 4 0 0 1 3 4 2)
 
 	mark=${version}_${dataset}_N${N[${idx}]}_M${M[${idx}]}_gamma_l${gamma_l[${idx}]}_gamma_ul${gamma_ul[${idx}]}_reverse${reverse[${idx}]}_lr${lr}_bz${bz}_total_steps${total_steps}_threshold${threshold}_seed${seed}_ema_u${ema_u}_mu${mu}_tau${tau}
 
