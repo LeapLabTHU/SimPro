@@ -97,10 +97,10 @@ bash sh/SimPro.sh cifar100 4         #gamma_l=20 head-tail
 bash sh/SimPro.sh stl10 0            #gamma_l=10
 bash sh/SimPro.sh stl10 1            #gamma_l=20
 
-bash sh/SimPro.sh smallimagenet    0 #ImageNet-127 32*32
-bash sh/SimPro.sh smallimagenet    1 #ImageNet-127 64*64
-bash sh/SimPro.sh smallimagenet_1k 0 #ImageNet-1k  32*32
-bash sh/SimPro.sh smallimagenet_1k 1 #ImageNet-1k  64*64
+bash sh/SimPro.sh smallimagenet    0 #gamma_t=1 ImageNet-127 32*32
+bash sh/SimPro.sh smallimagenet    1 #gamma_t=1 ImageNet-127 64*64
+bash sh/SimPro.sh smallimagenet_1k 0 #gamma_t=1 ImageNet-1k  32*32
+bash sh/SimPro.sh smallimagenet_1k 1 #gamma_t=1 ImageNet-1k  64*64
 
 bash sh/ACR_d.sh ...
 ```
