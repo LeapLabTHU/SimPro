@@ -727,23 +727,23 @@ def train(
 
         for batch_idx in tqdm(range(args.eval_step), total=args.eval_step):
             try:
-                inputs_x, targets_x = labeled_iter.next()
+                inputs_x, targets_x = next(labeled_iter)
             except:
                 if args.world_size > 1:
                     labeled_epoch += 1
                     labeled_trainloader.sampler.set_epoch(labeled_epoch)
 
                 labeled_iter = iter(labeled_trainloader)
-                inputs_x, targets_x = labeled_iter.next()
+                inputs_x, targets_x = next(labeled_iter)
 
             try:
-                (inputs_u_w, inputs_u_s, inputs_u_s1), u_real = unlabeled_iter.next()
+                (inputs_u_w, inputs_u_s, inputs_u_s1), u_real = next(unlabeled_iter)
             except:
                 if args.world_size > 1:
                     unlabeled_epoch += 1
                     unlabeled_trainloader.sampler.set_epoch(unlabeled_epoch)
                 unlabeled_iter = iter(unlabeled_trainloader)
-                (inputs_u_w, inputs_u_s, inputs_u_s1), u_real = unlabeled_iter.next()
+                (inputs_u_w, inputs_u_s, inputs_u_s1), u_real = next(unlabeled_iter)
 
             u_real = u_real.cuda()
             mask_l = u_real != -2
