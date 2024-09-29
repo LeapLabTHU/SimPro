@@ -1,4 +1,4 @@
-!#/bin/bash
+#!/bin/bash
 
 version=ACR_d
 dataset=$1
