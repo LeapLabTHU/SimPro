@@ -592,23 +592,23 @@ def train(
 
         for batch_idx in tqdm(range(args.eval_step), total=args.eval_step):
             try:
-                (inputs_l_w, inputs_l_s), l_real = labeled_iter.next()
+                (inputs_l_w, inputs_l_s), l_real = next(labeled_iter)
             except StopIteration:
                 labeled_epoch += 1
                 labeled_trainloader.sampler.set_epoch(labeled_epoch)
 
                 labeled_iter = iter(labeled_trainloader)
-                (inputs_l_w, inputs_l_s), l_real = labeled_iter.next()
+                (inputs_l_w, inputs_l_s), l_real = next(labeled_iter)
             except Exception as e:
                 raise e
 
             try:
-                (inputs_u_w, inputs_u_s, inputs_u_s1), u_real = unlabeled_iter.next()
+                (inputs_u_w, inputs_u_s, inputs_u_s1), u_real = next(unlabeled_iter)
             except StopIteration:
                 unlabeled_epoch += 1
                 unlabeled_trainloader.sampler.set_epoch(unlabeled_epoch)
                 unlabeled_iter = iter(unlabeled_trainloader)
-                (inputs_u_w, inputs_u_s, inputs_u_s1), u_real = unlabeled_iter.next()
+                (inputs_u_w, inputs_u_s, inputs_u_s1), u_real = next(unlabeled_iter)
             except Exception as e:
                 raise e
 
