@@ -2,7 +2,7 @@
 
 This repository contains the Pytorch implementation of the ICML 2024 paper [SimPro: A Simple Probabilistic Framework Towards Realistic Long-Tailed Semi-Supervised Learning](https://arxiv.org/abs/2402.13505).
 
-Authors: [Chaoqun Du](https://scholar.google.com/citations?user=0PSKJuYAAAAJ&hl=en), [Yizeng Han](https://yizenghan.top/), [Gao Huang](https://www.gaohuang.net).
+Authors: [Chaoqun Du](https://andy-du20.github.io/), [Yizeng Han](https://yizenghan.top/), [Gao Huang](https://www.gaohuang.net).
 
 [![arXiv](https://img.shields.io/badge/arxiv-SimPro-blue)](https://arxiv.org/abs/2402.13505)
 
